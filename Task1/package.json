@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "jshint": "^2.13.4",
+    "lodash": "^4.17.21"
+  },
+  "name": "js",
+  "version": "1.0.0",
+  "main": "Task1.js",
+  "devDependencies": {
+    "jest": "^27.4.7"
+  },
+  "scripts": {
+    "test": "jest"
+    
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
