@@ -45,7 +45,7 @@ function IsEuqalArray(firstItem , secondItem){
             
         }else{
 
-            if( !MediatorEuqal( firstItem[i],secondItem[i] ) )  return false;
+            if( !IsEqual( firstItem[i],secondItem[i] ) )  return false;
         }
     }
     return true;
@@ -62,36 +62,12 @@ function IsEuqalMap(firstItem , secondItem){
 
     for(let key of firstItem.keys()){
 
-        if( !MediatorEuqal( firstItem.get(key),secondItem.get(key) ) ) return false;
+        if( !IsEqual( firstItem.get(key),secondItem.get(key) ) ) return false;
     }
 
     return true;
 
 }
-
-
-
-function MediatorEuqal(firstItem , secondItem){
-
-    let typeFirst = getType(firstItem);
-    let typeSecod = getType(secondItem);
-
-    if(typeFirst !== typeSecod) return false;
-
-    if( IsPrimitive(typeFirst) )  return IsEuqalPrimitiv( firstItem, secondItem );
-
-    if( typeFirst === 'Array') return IsEuqalArray( firstItem, secondItem );
-
-
-    if( typeFirst === 'Object') return IsEuqalObject( firstItem, secondItem );
-
-    if(typeFirst === 'Map') return IsEuqalMap( firstItem, secondItem );
-
-    if(typeFirst === 'Set') return IsEuqalArray( Array.from(firstItem), Array.from(secondItem))
-
-
-}
-
 
 function IsEuqalObject(firstItem , secondItem){
 
@@ -107,14 +83,14 @@ function IsEuqalObject(firstItem , secondItem){
 
     for(let prop of propertyFirst){
 
-        if( !MediatorEuqal( firstItem[prop],secondItem[prop] ) ) return false;
+        if( !IsEqual( firstItem[prop],secondItem[prop] ) ) return false;
     }
 
     return true;
 
 }
 
-module.exports =
+
 function IsEqual(firstItem , secondItem){
 
     let typeFirst = getType(firstItem);
@@ -133,15 +109,4 @@ function IsEqual(firstItem , secondItem){
     if(typeFirst === 'Set') return IsEuqalArray( Array.from(firstItem), Array.from(secondItem))
 
 
-}/*
-window.onload = function() {
-    let map1 = new Map();
-    map1.set(1,"str1");
- 
- 
-    let map2 = new Map();
-    map2.set(1,"str1");
- 
-
-    IsEqual( map1, map2 );
- };*/
+}

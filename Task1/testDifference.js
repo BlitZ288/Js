@@ -7,6 +7,7 @@ describe("difference", function() {
         let result = difference([1,2,3,4],1);
       
         assert.deepEqual(result, [2,3,4]);
+       
     });
 
     it("Удалить массив элементов из массива ", function() {
