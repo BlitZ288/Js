@@ -1,36 +1,34 @@
 
-
   function PromiseAll(promises){
 
-    /*
-    1. Получаем массив промисов. 
-    2. Ждем пока все выполняться. 
-    3. Проверяем на ошибочное выполнение. 
-    4. Возврощяем промис.
-    
-    */
-   let a= promises[0].then((x)=> console.log(x));
+    let resultPromises =[];
+    let countEnd = 0;
 
-    return new Promise((resolve,reject) => 
-    {
-        while(true){
+    return new Promise((resolve, reject )=>{
 
-            let count = 0; 
+        for( let i =0; i < promises.length; i++ ){  
+            
+            promises[i].then(
+                (value )=>
+                {
+                    resultPromises[i]=value;
+                    countEnd++;
 
-            for(let promise of promises){
-               promise.then((x)=>
-               {
-                   console.log(x);
-                   count++; 
+                    if(countEnd==promises.length){                       
+                       
+                        resolve(resultPromises);
+                                   
+                    } 
+                },
+                (error)=>{
+                   
+                    reject(error);
                 }
-               
-               );       
-            }
-
-            if(count === promises.length){
-                break;
-            }
+            );
         }
-    });
 
+    });
+    
 }
+
+
