@@ -1,20 +1,16 @@
-//module.exports =
-function sortedUniq(array){ 
-    let resultArray= [array[0]];   
 
-    for( let i=1; i <= array.length; i++){
+function MySortedUniq(array){
 
-        if( typeof(array[i]) === "number" && typeof(resultArray[i-1]) === "number" )
-        {
-            if(isNaN(array[i]) && !isNaN(resultArray[i-1])){
+    let resultArray=[];
+    resultArray.push(array[0]);
 
-                resultArray.push(array[i]);
-            }
-
-        }else if(resultArray[i-1]!==array[i]){
-
-            resultArray.push(array[i]);
-        }
+    for( let item of array )
+    {        
+         if( !baseEqual( resultArray[resultArray.length-1] , item ) )        
+         {
+            resultArray.push(item);                
+         }
+       
     }
     return resultArray;
 }

@@ -1,41 +1,116 @@
+/*
+TODO: 1.Избавиться от матрицы. (можно попробывать через объект) Сделал 
+      2.Помеянть метод calculate (разделить работу упрастить все )
+*/
+function Calculator(params)
+{
+  let result = params;
 
-function Calculator(params) {
+  if (!new.target)
+  {
+    throw new Error("Функция должна вызываться в режиме конструктору");
+  }
 
-    let result=params;
+  let buffer = [];
 
-    if(!new.target){
-        throw new Error("Функция должна вызываться в режиме конструктору");
+  function calculatorOfValues(firstValue, secondValue, sign)
+   {
+        switch (sign) 
+        {
+        case "+":
+            return firstValue + secondValue;
+
+        case "-":
+            return firstValue - secondValue;
+
+        case "*":
+            return firstValue * secondValue;
+
+        case "/":
+            return firstValue / secondValue;
+        }
+  }
+
+  this.multiply = function (param) 
+  {
+    buffer.push({ sign: "*", argumen: param });
+
+    return this;
+  };
+
+  this.plus = function (param)
+  {
+    buffer.push({ sign: "+", argumen: param });
+
+    return this;
+  };
+
+  this.minus = function (param)
+  {
+    buffer.push({ sign: "-", argumen: param });
+
+    return this;
+  };
+
+  this.divide = function (param)
+  {
+    if (param == 0)
+    {
+      throw new Error("Деление на 0 невозможно");
     }
 
-    this.multiply=function(param){
-        result=param*result;
-        return this;
-    };
+    buffer.push({ sign: "/", argumen: param });
 
-    this.plus=function(param){
-        result=result+param;
-        return this;
-    };
+    return this;
+  };
 
-    this.minus=function (param) {
-        result=result-param;
-        return this;
-    };
-
-    this.divide=function (param) {
-        
-        if(param==0)
+  function TransformArrayWithHighPriority ()
+  {
+    let temp;
+    
+    for (let i = 0; i < buffer.length; i++)
+    {
+      if (buffer[i].sign == "*" || buffer[i].sign == "/")
+      {          
+        if (i == 0)
         { 
-            throw new Error("Деление на 0 невозможно");
+          result = calculatorOfValues(result, buffer[i].argumen, buffer[i].sign);
+          buffer.splice(i, 1);
+          i--;
+
+        } else {
+          temp = calculatorOfValues(
+            buffer[i - 1].argumen,
+            buffer[i].argumen,
+            buffer[i].sign
+          );
+
+          buffer.splice(i - 1, 2, {
+            sign: buffer[i - 1].sign,
+            argumen: temp,
+          });
+          i -= 2;
         }
+      }
+    }
+    return buffer;
+  }
 
-        result=result/param;
-        return this;
-    };
+  this.calculate = function () 
+  {
+    let arrayCalculationObject = TransformArrayWithHighPriority();
+    
+    for (let i = 0; i < arrayCalculationObject.length; i++)
+    {
+      if (i == 0) 
+      {
+        result = calculatorOfValues(result, arrayCalculationObject[i].argumen, arrayCalculationObject[i].sign);
 
-    this.calculator=function () {
-        return result;
-    };
+      } else {
+        result = calculatorOfValues(result, arrayCalculationObject[i].argumen, arrayCalculationObject[i].sign);
+      }
+    }
+
+    return result;
+  };
 }
-console.log(new Calculator(5).divide(0).calculator());
-/*TODO: Нужно что то сделать с порядком вычислений */

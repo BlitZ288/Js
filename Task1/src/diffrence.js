@@ -1,35 +1,25 @@
 
-function getType(type){
-    ///Просто посчитал по смиволам поэтому 8 
-
-    return Object.prototype.toString.call(type).slice(8,-1);
-}
-
-function differenceForOneValue(array, value){
-
-    var indexValue = array.indexOf(value);
-    if(indexValue!==-1)
+function MyDifference (array, values){
+   
+    let resultArray = [];
+    let flagPush = true;
+ 
+    for( let i = 0 ; i < array.length; i++ )
     {
-        array.splice(indexValue,1);
+        for(let item of values )
+        {
+            if( baseEqual(item, array[i] ) )
+            {
+                flagPush=false;
+                break;
+            }
+        }
+        if(flagPush)
+        {
+            resultArray.push(array[i]);
+        }
+        flagPush=true;
     }
-    return array;
-}
-function differenceForArrayValue(array, arrayValue){
-      
-    for(let item of arrayValue){
-        
-        differenceForOneValue(array,item);
 
-    }
-    return array;
-}
-
-function difference(array, values){
-    
-    if(array.length===0) 
-    {
-        return [];
-    }
-   if(getType(values)==="Array") return differenceForArrayValue(array,values);
-   return differenceForOneValue(array,values);
+    return resultArray;   
 }
