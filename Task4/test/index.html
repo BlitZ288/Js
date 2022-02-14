@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <!-- подключаем стили Mocha, для отображения результатов -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css"
+    />
+    <!-- подключаем библиотеку Mocha -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+    <!-- настраиваем Mocha: предстоит BDD-тестирование -->
+    <script>
+      mocha.setup("bdd");
+    </script>
+
+    <!-- подключаем chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+    <!-- в chai есть много всего, выносим assert в глобальную область -->
+    <script>
+      var assert = chai.assert;
+    </script>
+  </head>
+
+  <body>
+    <script >
+      
+function extend(firstClass , secondClass)
+{  
+   Object.setPrototypeOf(firstClass,secondClass);
+}
+
+function Employee (salary , position)
+{
+    this.salary = salary;
+    this.position = position;
+
+    this.work = function () {
+        console.log(`Работаю ту ту ту `);
+    };
+
+}
+function Person(name , age){
+
+    this.name = name;
+    this.age = age;
+   
+    this.sayName = function () {
+        console.log(`Здравствуйте меня зовут ${this.name}`);
+    };
+    this.jump = function () {
+        console.log(`Я смог прыгнуть в свои ${this.age} `);
+    };
+}
+function createCalss( {constructor, ...methods })
+{   
+    return new function (){
+          
+        return function (...arg) {
+
+          for (let method in methods) {
+            this[method] = methods[method];
+          }
+
+          constructor.call(this, ...arg);
+          return this;
+        };
+    };
+}
+
+let  Cat =  createCalss(
+    {
+      constructor(name, age)
+      {
+        this.name = name; 
+        this.age = age;
+            
+      },
+      meow(){
+        console.log(`Meow ${this.name}`);
+      },
+      jump(){
+        console.log(`Прыгнул выше своих ${this.age}`);
+      }
+    }
+  );
+ 
+
+let barsik =  new Cat("barsik",23);
+let employee = new Employee("Вова",55);
+let persone = new Person("Кирилл",99);
+persone.sayName();
+employee.work();
+
+extend(barsik, persone);
+
+barsik.sayName();
+    
+
+    </script>
+
+    <!-- в этом скрипте находятся спеки -->
+    <script></script>
+    <!-- в элементе с id="mocha" будут результаты тестов -->
+    <div id="mocha"></div>
+    <script></script>
+    <!-- запустить тесты! -->
+    <script>
+      mocha.run();
+    </script>
+  </body>
+</html>

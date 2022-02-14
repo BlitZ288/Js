@@ -25,10 +25,35 @@
   </head>
 
   <body>
-    <script src="../src/Calculator.js"></script>
+    <script >
+
+    class MyArray extends Array{
+      first()
+      {
+          return this[0];
+      }
+      last()
+      {
+          return this[this.length-1];
+      }
+      random()
+      {
+          let randomIndex = Math.floor(Math.random() * this.length);
+          return this[randomIndex];
+      }
+    }
+    let myarr = new MyArray(1,2,3,5,6,9,7,9);
+    let arr= [1,2,3,4];
+  
+    console.log(arr.first());
+    console.log(myarr.length);
+    console.log(myarr.first());
+    console.log(myarr.last());
+    console.log(myarr.random());
+  </script>
 
     <!-- в этом скрипте находятся спеки -->
-    <script src="testsFunctions.js"></script>
+    <script src=""></script>
     <!-- в элементе с id="mocha" будут результаты тестов -->
     <div id="mocha"></div>
     <script></script>
